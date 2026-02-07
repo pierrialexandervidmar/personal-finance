@@ -1,0 +1,87 @@
+# =========================
+# OS / Editor / IDE
+# =========================
+.DS_Store
+Thumbs.db
+
+# IntelliJ / JetBrains
+.idea/
+*.iml
+*.ipr
+*.iws
+out/
+
+# VS Code
+.vscode/
+*.code-workspace
+
+# Eclipse / STS
+.classpath
+.project
+.settings/
+.factorypath
+
+# =========================
+# Logs
+# =========================
+*.log
+logs/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# =========================
+# Environment / Secrets
+# =========================
+.env
+.env.*
+!.env.example
+
+# =========================
+# Docker
+# =========================
+**/docker-data/
+**/docker-volumes/
+**/.docker/
+
+# =========================
+# Backend (Spring Boot / Maven)
+# =========================
+backend/target/
+backend/.classpath
+backend/.project
+backend/.settings/
+
+# Maven wrapper should be committed:
+!backend/.mvn/wrapper/maven-wrapper.jar
+!backend/.mvn/wrapper/maven-wrapper.properties
+!backend/mvnw
+!backend/mvnw.cmd
+
+# If you created local override files:
+backend/src/main/resources/application-local.properties
+backend/src/test/resources/application-local.properties
+
+# =========================
+# Frontend (Angular / Node)
+# =========================
+frontend/node_modules/
+frontend/dist/
+frontend/.angular/
+frontend/.cache/
+frontend/coverage/
+frontend/.npmrc
+frontend/.pnpm-store/
+
+# Angular build artifacts
+**/.sass-cache/
+**/*.tgz
+
+# =========================
+# Temporary / misc
+# =========================
+*.tmp
+*.swp
+*.swo
+*.bak

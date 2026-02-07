@@ -1,0 +1,72 @@
+@baseUrl = http://localhost:8080
+@json = application/json
+
+### Health
+GET {{baseUrl}}/api/health
+
+### Dev Create User (201 Created)
+POST {{baseUrl}}/api/users
+Content-Type: {{json}}
+
+{
+  "name": "Pierri",
+  "email": "pierri@test.com",
+  "password": "123456"
+}
+
+### Dev Create User (duplicado - deve falhar)
+POST {{baseUrl}}/api/users/dev-create
+Content-Type: {{json}}
+
+{
+  "name": "Pierri 2",
+  "email": "pierri@test.com",
+  "password": "123456"
+}
+
+### Dev Create User (validação - email inválido)
+POST {{baseUrl}}/api/users/dev-create
+Content-Type: {{json}}
+
+{
+  "name": "Teste",
+  "email": "email-invalido",
+  "password": "123456"
+}
+
+### Dev Create User (validação - password curto)
+POST {{baseUrl}}/api/users/dev-create
+Content-Type: {{json}}
+
+{
+  "name": "Teste",
+  "email": "teste@teste.com",
+  "password": "123"
+}
+
+### Register
+POST {{baseUrl}}/api/auth/register
+Content-Type: {{json}}
+
+{
+  "name": "Pierri",
+  "email": "pierri2@test.com",
+  "password": "123456"
+}
+
+### Login
+POST {{baseUrl}}/api/auth/login
+Content-Type: {{json}}
+
+{
+  "email": "pierri2@test.com",
+  "password": "123456"
+}
+
+### Refresh
+POST {{baseUrl}}/api/auth/refresh
+Content-Type: {{json}}
+
+{
+  "refreshToken": "{{refreshToken}}"
+}
