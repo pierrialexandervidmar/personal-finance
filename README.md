@@ -9,16 +9,15 @@ Sistema de **controle financeiro pessoal** para estudo e evolução incremental,
 ## Stack
 
 ### Backend
-- Java **21** (Zulu)
-- Spring Boot (MVC)
+- Java **21**
+- Spring Boot
 - Maven
 - Virtual Threads
 - Spring Data JPA (Hibernate)
-- Spring Security (em evolução para JWT)
-- Flyway (migrations)
-- PostgreSQL (Docker)
+- Spring Security
+- Flyway
+- PostgreSQL
 - Sem Lombok
-- `application.properties` (não usar YAML)
 
 ### Frontend (planejado)
 - Angular 15
@@ -149,10 +148,6 @@ security.jwt.issuer=personal-finance
 security.jwt.access-token-minutes=15
 security.jwt.refresh-token-days=7
 security.jwt.secret=CHANGE_ME_TO_A_LONG_RANDOM_SECRET_WITH_32+_CHARS
-```
-
-⚠️ **Nunca suba secrets reais para o GitHub.**  
-(Depois vamos mover isso para variáveis de ambiente.)
 
 ---
 
