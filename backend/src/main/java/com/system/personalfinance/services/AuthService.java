@@ -1,5 +1,16 @@
 package com.system.personalfinance.services;
 
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
+import java.util.HexFormat;
+import java.util.UUID;
+
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
+
 import com.system.personalfinance.dtos.auth.AuthResponse;
 import com.system.personalfinance.dtos.auth.LoginRequest;
 import com.system.personalfinance.dtos.auth.RefreshRequest;
@@ -9,16 +20,8 @@ import com.system.personalfinance.entities.User;
 import com.system.personalfinance.exceptions.ConflictException;
 import com.system.personalfinance.repositories.RefreshTokenRepository;
 import com.system.personalfinance.repositories.UserRepository;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Service;
 
-import java.nio.charset.StandardCharsets;
-import java.security.MessageDigest;
-import java.time.Instant;
-import java.time.temporal.ChronoUnit;
-import java.util.HexFormat;
-import java.util.UUID;
+import jakarta.transaction.Transactional;
 
 @Service
 public class AuthService {
@@ -109,11 +112,12 @@ public class AuthService {
         }
     }
 
+    @Transactional
     public AuthResponse refresh(RefreshRequest req) {
         String refreshRaw = req.getRefreshToken();
         String refreshHash = sha256(refreshRaw);
 
-        RefreshToken token = refreshTokenRepository.findByTokenHash(refreshHash)
+        RefreshToken token = refreshTokenRepository.findByTokenHasWithUser(refreshHash)
                 .orElseThrow(() -> new IllegalArgumentException("Refresh token inválido"));
 
         if (token.getExpiresAt().isBefore(Instant.now())) {

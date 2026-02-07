@@ -1,15 +1,18 @@
 package com.system.personalfinance.services;
 
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.security.Keys;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Service;
-
-import javax.crypto.SecretKey;
 import java.nio.charset.StandardCharsets;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.Date;
+
+import javax.crypto.SecretKey;
+
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
+
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.security.Keys;
 
 /**
  * Serviço responsável por gerar JWTs (access tokens) do sistema.
@@ -58,5 +61,22 @@ public class JwtService {
                 .expiration(Date.from(exp))
                 .signWith(key())
                 .compact();
+    }
+
+    /**
+     * Valida e extrai claims do JWT. Lança exceção se token for inválido/expirado.
+     */
+    public Claims parseAccessToken(String token) {
+        return Jwts.parser()
+            .verifyWith(key())
+            .requireIssuer(issuer)
+            .build()
+            .parseSignedClaims(token)
+            .getPayload();
+    }
+
+    /** Extrai o userId (subject) do token já validado. */
+    public Long extractUserId(Claims claims) {
+        return Long.parseLong(claims.getSubject());
     }
 }

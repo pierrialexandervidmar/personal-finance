@@ -1,5 +1,6 @@
 @baseUrl = http://localhost:8080
 @json = application/json
+@refreshToken = refreshToken
 
 ### Health
 GET {{baseUrl}}/api/health
@@ -68,5 +69,9 @@ POST {{baseUrl}}/api/auth/refresh
 Content-Type: {{json}}
 
 {
-  "refreshToken": "{{refreshToken}}"
+  "refreshToken": "8efc9de9-f933-438f-9cb8-73cd8ddac5f9.22fd90f1-3472-4edf-beab-bded857891dc"
 }
+ 
+### Me (protected)
+GET {{baseUrl}}/api/me
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJpc3MiOiJwZXJzb25hbC1maW5hbmNlIiwic3ViIjoiMSIsImVtYWlsIjoicGllcnJpMkB0ZXN0LmNvbSIsImlhdCI6MTc3MDUwMzY4MCwiZXhwIjoxNzcwNTA0NTgwfQ.t_6rKP8qiN-aKZwmq3SlqdGgLuCeLnZ6aW_wiFi1VTwnZbnFijniqmlfiHQGltFC
