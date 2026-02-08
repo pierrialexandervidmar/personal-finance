@@ -1,61 +1,19 @@
 @baseUrl = http://localhost:8080
 @json = application/json
-@refreshToken = refreshToken
+
+#############################################
+# 0) Health
+#############################################
 
 ### Health
 GET {{baseUrl}}/api/health
 
-### Dev Create User (201 Created)
-POST {{baseUrl}}/api/users
-Content-Type: {{json}}
 
-{
-  "name": "Pierri",
-  "email": "pierri@test.com",
-  "password": "123456"
-}
+#############################################
+# 1) Auth
+#############################################
 
-### Dev Create User (duplicado - deve falhar)
-POST {{baseUrl}}/api/users/dev-create
-Content-Type: {{json}}
-
-{
-  "name": "Pierri 2",
-  "email": "pierri@test.com",
-  "password": "123456"
-}
-
-### Dev Create User (validação - email inválido)
-POST {{baseUrl}}/api/users/dev-create
-Content-Type: {{json}}
-
-{
-  "name": "Teste",
-  "email": "email-invalido",
-  "password": "123456"
-}
-
-### Dev Create User (validação - password curto)
-POST {{baseUrl}}/api/users/dev-create
-Content-Type: {{json}}
-
-{
-  "name": "Teste",
-  "email": "teste@teste.com",
-  "password": "123"
-}
-
-### Register
-POST {{baseUrl}}/api/auth/register
-Content-Type: {{json}}
-
-{
-  "name": "Pierri",
-  "email": "pierri2@test.com",
-  "password": "123456"
-}
-
-### Login
+### @name login
 POST {{baseUrl}}/api/auth/login
 Content-Type: {{json}}
 
@@ -64,14 +22,46 @@ Content-Type: {{json}}
   "password": "123456"
 }
 
-### Refresh
-POST {{baseUrl}}/api/auth/refresh
-Content-Type: {{json}}
 
-{
-  "refreshToken": "8efc9de9-f933-438f-9cb8-73cd8ddac5f9.22fd90f1-3472-4edf-beab-bded857891dc"
-}
- 
+#############################################
+# 2) Protected - Me (usa token do login)
+#############################################
+
 ### Me (protected)
 GET {{baseUrl}}/api/me
-Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJpc3MiOiJwZXJzb25hbC1maW5hbmNlIiwic3ViIjoiMSIsImVtYWlsIjoicGllcnJpMkB0ZXN0LmNvbSIsImlhdCI6MTc3MDUwMzY4MCwiZXhwIjoxNzcwNTA0NTgwfQ.t_6rKP8qiN-aKZwmq3SlqdGgLuCeLnZ6aW_wiFi1VTwnZbnFijniqmlfiHQGltFC
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJpc3MiOiJwZXJzb25hbC1maW5hbmNlIiwic3ViIjoiMSIsImVtYWlsIjoicGllcnJpMkB0ZXN0LmNvbSIsImlhdCI6MTc3MDU3NjQ2OSwiZXhwIjoxNzcwNTc3MzY5fQ.3o9Vs3i83UoLR5ew6FrN8Y74JKSHiaWwrPjTKRqlYWU5N9XD8lnS8pyP6uoM-SYN
+
+
+#############################################
+# 3) Accounts (protected)
+#############################################
+
+### Accounts - List
+GET {{baseUrl}}/api/accounts
+Authorization: Bearer {{login.response.body.accessToken}}
+
+### Accounts - Create
+POST {{baseUrl}}/api/accounts
+Content-Type: {{json}}
+Authorization: Bearer {{login.response.body.accessToken}}
+
+{
+  "name": "Banco Nubank",
+  "type": "BANK",
+  "initialBalanceCents": 12000
+}
+
+### Accounts - Update
+PUT {{baseUrl}}/api/accounts/1
+Content-Type: {{json}}
+Authorization: Bearer {{login.response.body.accessToken}}
+
+{
+  "name": "Banco Inter (Atualizado2)",
+  "type": "BANK",
+  "initialBalanceCents": 250000
+}
+
+### Accounts - Delete
+DELETE {{baseUrl}}/api/accounts/1
+Authorization: Bearer {{login.response.body.accessToken}}
