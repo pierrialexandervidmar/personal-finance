@@ -3,7 +3,7 @@ package com.system.personalfinance.entities;
 import java.io.Serializable;
 import java.time.Instant;
 
-import com.system.personalfinance.enums.TransactionTypeEnum;
+import com.system.personalfinance.enums.TransactionType;
 
 import jakarta.persistence.*;
 
@@ -26,7 +26,7 @@ public class Category implements Serializable {
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 10)
-    private TransactionTypeEnum type;
+    private TransactionType type;
 
     @Column(name = "created_at", nullable = false)
     private Instant createdAt;
@@ -69,11 +69,11 @@ public class Category implements Serializable {
         this.name = name;
     }
 
-    public TransactionTypeEnum getType() {
+    public TransactionType getType() {
         return type;
     }
 
-    public void setType(TransactionTypeEnum type) {
+    public void setType(TransactionType type) {
         this.type = type;
     }
 

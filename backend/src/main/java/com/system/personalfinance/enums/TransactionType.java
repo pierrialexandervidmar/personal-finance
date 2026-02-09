@@ -1,6 +1,6 @@
 package com.system.personalfinance.enums;
 
-public enum TransactionTypeEnum {
+public enum TransactionType {
     INCOME,
     EXPENSE
 }

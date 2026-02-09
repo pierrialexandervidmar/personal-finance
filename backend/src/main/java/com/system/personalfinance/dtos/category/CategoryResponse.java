@@ -1,11 +1,11 @@
 package com.system.personalfinance.dtos.category;
 
 import java.time.Instant;
-import com.system.personalfinance.enums.TransactionTypeEnum;
+import com.system.personalfinance.enums.TransactionType;
 
 public record CategoryResponse(
         Long id,
         String name,
-        TransactionTypeEnum type,
+        TransactionType type,
         Instant createdAt) {
 }
